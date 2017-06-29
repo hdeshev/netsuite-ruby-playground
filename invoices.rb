@@ -5,20 +5,28 @@ require_relative './config'
 #   NetSuite::Records::Invoice.get_list(list: args)
 # end
 
+def get_customers(*args)
+  NetSuite::Records::Customer.get_list(list: args)
+end
+
+customer = get_customers(127)[0]
+puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
 
 # puts NetSuite::Records::Invoice.fields
 
 netsuite_invoice = NetSuite::Records::Invoice.get(22473)
-netsuite_invoice.custom_form
-# puts netsuite_invoice.location.internal_id
+#netsuite_invoice.custom_form
+puts "Existing invoice: #{netsuite_invoice.internal_id} #{netsuite_invoice.external_id}"
+invoice_item = netsuite_invoice.item_list.item[0]
 
 invoice = NetSuite::Records::Invoice.new(
-  tran_id: 'RB20170630123456789USD',
+  tran_id: 'RB20170630123456790USD',
   due_date: DateTime.now + 1,
   amount: 10,
   exchange_rate: 1,
   currency: NetSuite::Records::Currency.get(1),
   entity: NetSuite::Records::RecordRef.new(internal_id: 324),
+  order_type: 'Sales Order',
   # account: netsuite_invoice.account,
   # bill_address_list: netsuite_invoice.bill_address_list,
   # custom_form: netsuite_invoice.custom_form,
@@ -47,4 +55,8 @@ invoice = NetSuite::Records::Invoice.new(
   # posting_period: netsuite_invoice.posting_period,
   # item_list: netsuite_invoice.item_list,
 )
+invoice.custom_field_list.custbody_order_type = 1
+invoice.custom_field_list.custbody_end_user = 324
+#pp invoice.item_list
+invoice.item_list << invoice_item
 puts invoice.add
