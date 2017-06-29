@@ -11,7 +11,7 @@ GEM
       rack
       socksify
     mini_portile2 (2.2.0)
-    netsuite (0.8.0)
+    netsuite (0.8.1)
       savon (>= 2.3.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
