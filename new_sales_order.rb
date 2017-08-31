@@ -2,8 +2,8 @@ require 'pp'
 require 'date'
 require_relative './config'
 
-customer = NetSuite::Records::Customer.get 3
-puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
+#customer = NetSuite::Records::Customer.get 3
+#puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
 
 #sales_order = NetSuite::Records::SalesOrder.get(403)
 #pp sales_order
@@ -16,9 +16,12 @@ puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
 #item = sales_order.item_list.item[0]
 #pp item
 
+# NetSuite dates are tricky:
+# http://mikebian.co/notes-on-dates-timezones-with-netsuites-suitetalk-api/
+
 new_order = NetSuite::Records::SalesOrder.new(
-  start_date: DateTime.parse('2017-08-01'),
-  end_date: DateTime.parse('2017-08-31'),
+  start_date: NetSuite::Utilities.normalize_time_to_netsuite_date(DateTime.parse('2017-08-01').to_time),
+  end_date: NetSuite::Utilities.normalize_time_to_netsuite_date(DateTime.parse('2017-08-31').to_time),
   entity: {internal_id: 3},
   order_status: '_pendingFulfillment',
   #order_status: '_pendingApproval',
