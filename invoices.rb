@@ -18,6 +18,7 @@ netsuite_invoice = NetSuite::Records::Invoice.get(22473)
 #netsuite_invoice.custom_form
 puts "Existing invoice: #{netsuite_invoice.internal_id} #{netsuite_invoice.external_id}"
 invoice_item = netsuite_invoice.item_list.item[0]
+pp invoice_item
 
 invoice = NetSuite::Records::Invoice.new(
   tran_id: 'RB20170630123456790USD',
@@ -58,5 +59,15 @@ invoice = NetSuite::Records::Invoice.new(
 invoice.custom_field_list.custbody_order_type = 1
 invoice.custom_field_list.custbody_end_user = 324
 #pp invoice.item_list
-invoice.item_list << invoice_item
+
+invoice_item = NetSuite::Records::InvoiceItem.new(
+  attributes: {
+    name: "RB Extract",
+  },
+  description: "RB Extract description",
+  amount: "20.0",
+  quantity: 5,
+)
+
+invoice.item_list.items << invoice_item
 puts invoice.add

@@ -1,12 +1,12 @@
 require 'pp'
 require_relative './config'
 
-def get_customers(*args)
-  NetSuite::Records::Customer.get_list(list: args)
+def get_customer(id)
+  NetSuite::Records::Customer.get id
 end
 
-customers = get_customers *(127..150)
+customer = get_customer 3
+puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
 
-customers.each do |customer|
-  puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
-end
+#customer.external_id = '6102679841'
+#customer.update
