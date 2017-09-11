@@ -33,11 +33,11 @@ def change_subsidiary(id, new_subsidiary)
   customer
 end
 
-#customer = get_customer 111
-#puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
+customer = get_customer 511
+puts "#{customer.internal_id},#{customer.external_id},#{customer.email}"
 
 #new_customer = create_customer
 #puts "ID: #{new_customer.internal_id} #{new_customer.errors}"
 
-customer = change_subsidiary 511, 3
-puts "#{customer.subsidiary.internal_id}, #{customer.errors}"
+#customer = change_subsidiary 511, 3
+#puts "#{customer.subsidiary.internal_id}, #{customer.errors}"
