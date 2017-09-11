@@ -4,7 +4,7 @@ NetSuite.configure do
   reset!
 
   # optional, defaults to 2011_2
-  api_version	'2012_1'
+  api_version	'2017_1'
 
   # optionally specify full wsdl URL (to switch to sandbox, for example)
   wsdl          "https://webservices.sandbox.netsuite.com/wsdl/v#{api_version}_0/netsuite.wsdl"
@@ -29,3 +29,8 @@ NetSuite.configure do
   role  1111
 end
 
+NetSuite::Configuration.soap_header = {
+   'platformMsgs:ApplicationInfo' => {
+      'platformMsgs:applicationId' => '***'
+   }
+}
